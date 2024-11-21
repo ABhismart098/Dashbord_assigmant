@@ -6,12 +6,12 @@ const {
   updateEmployee,
   deleteEmployee,
 } = require('../controller/employee');
-const router = express.Router();
+const signupControllerRoutes = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
-router.post('/employees',upload.single('profileImage'), createEmployee);
-router.get('/employees', getEmployees);
-router.put('/employees/:id', upload.single('profileImage'), updateEmployee);
-router.delete('/employees/:id', deleteEmployee);
+signupControllerRoutes.post('/employees', upload.single('profileImage'), createEmployee);
+signupControllerRoutes.get('/employees', getEmployees);
+signupControllerRoutes.put('/employees/:id', upload.single('profileImage'), updateEmployee);
+signupControllerRoutes.delete('/employees/:id', deleteEmployee);
 
-module.exports = router;
+module.exports = signupControllerRoutes;

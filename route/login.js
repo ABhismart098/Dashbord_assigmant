@@ -1,18 +1,24 @@
-const express = require('express');
-const { login } = require('../controller/logincontroller'); // Ensure correct file path
-const { authenticateToken } = require('../middleware/middleware');
+const { generateToken, encryptPassword } = require('../middleware/middleware');  // Import the generateToken function
+const login = require('../models/login');
 
-const router = express.Router();
+exports.login = async (req, res) => {
+  const { userName, passwordValue } = req.body;
 
-// Public route for login
-router.post('/login', login);
-
-// Protected route (requires valid JWT token)
-router.get('/protected', authenticateToken, (req, res) => {
-  res.send({ 
-    message: 'Access granted to protected route', 
-    user: req.user, // User data added by the middleware
-  });
-});
-
-module.exports = router;
+  try {
+    const value = encryptPassword(passwordValue);
+    const user = await login.findOne({ userName, password: value });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    const token = generateToken(user);
+    if (token) {
+      user._doc.token = token;
+    }
+    return res.status(200).json({
+      message: 'Login successful',
+      user, // The generated token is sent to the client
+    });
+  } catch (err) {
+    return res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};

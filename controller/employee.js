@@ -1,5 +1,6 @@
 const Employee = require('../models/singup');
 const cloudinary = require('../config/cloudinaryconnection'); // Cloudinary configuration
+const { v4: uuidv4 } = require('uuid');
 
 // Create Employee with optional image upload
 exports.createEmployee = async (req, res) => {
@@ -17,13 +18,15 @@ exports.createEmployee = async (req, res) => {
 
     // Create a new employee
     const newEmployee = new Employee({
-      image: imageUrl,
+      _id: new mongoose.Types.ObjectId(),
+      employeeId: uuidv4(),
+      profileImage: imageUrl,
       name,
       email,
       mobile,
       designation,
       gender,
-      course,
+      course
     });
 
     await newEmployee.save();
@@ -39,11 +42,11 @@ exports.getEmployees = async (req, res) => {
     const { search } = req.query;
     const query = search
       ? {
-          $or: [
-            { name: { $regex: search, $options: 'i' } },
-            { email: { $regex: search, $options: 'i' } },
-          ],
-        }
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { email: { $regex: search, $options: 'i' } },
+        ],
+      }
       : {};
 
     const employees = await Employee.find(query);

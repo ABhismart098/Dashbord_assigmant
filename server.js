@@ -2,23 +2,36 @@
 const express = require('express');
 const connectDB = require('./config/dataconection'); // Correct file path for MongoDB config
 const cloudinary = require('./config/cloudinaryconnection'); // Correct file path for Cloudinary config
-const signupRoutes = require('./route/sigup'); // Ensure file paths are correct
-const loginRoutes = require('./route/login'); // Ensure file paths are correct
-require('dotenv').config(); // Load environment variables
 
+require('dotenv').config(); // Load environment variables
+const indexRoutes = require('./route/index.route'); // Main router for the app
+
+// Initialize Express App
 const app = express();
+
+// Middleware to parse JSON requests
 app.use(express.json());
 
 // Connect to MongoDB
-connectDB(); // Call the connectDB function
+connectDB(); // Ensure your `dataconection.js` exports a `connectDB` function
 
-// Cloudinary initialization
-cloudinary; // Cloudinary is already initialized in its config file
+// Cloudinary Initialization
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-// Routes
-app.use('/api/signup', signupRoutes);
-app.use('/api/login', loginRoutes);
 
-// Start server
+
+// Main API Routes
+app.use('/api', indexRoutes);
+
+// Default Route for Testing
+app.get('/', (req, res) => {
+  res.send('Hi, Server is running!');
+});
+
+// Start the Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
