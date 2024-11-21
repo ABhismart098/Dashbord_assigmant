@@ -18,7 +18,7 @@ exports.createEmployee = async (req, res) => {
 
     // Create a new employee
     const newEmployee = new Employee({
-      _id: new mongoose.Types.ObjectId(),
+      
       employeeId: uuidv4(),
       profileImage: imageUrl,
       name,
