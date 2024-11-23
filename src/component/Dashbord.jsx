@@ -149,7 +149,7 @@ function AdminDashboard() {
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Add New User</h2>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={handleFormSubmit} className="user-form">
               {/* Name Input */}
               <div className="input-container">
                 <input
@@ -189,33 +189,51 @@ function AdminDashboard() {
                 </select>
               </div>
 
-              {/* Courses Checkboxes */}
-              <div className="input-container">
+
+              <div className="course-section">
                 <label>Courses</label>
-                <div>
-                  <input
-                    type="checkbox"
-                    value="React"
-                    checked={newUser.courses.includes("React")}
-                    onChange={handleCourseChange}
-                  />
-                  <label>React</label>
-
-                  <input
-                    type="checkbox"
-                    value="Node"
-                    checked={newUser.courses.includes("Node")}
-                    onChange={handleCourseChange}
-                  />
-                  <label>Node.js</label>
-
-                  <input
-                    type="checkbox"
-                    value="MongoDB"
-                    checked={newUser.courses.includes("MongoDB")}
-                    onChange={handleCourseChange}
-                  />
-                  <label>MongoDB</label>
+                <div className="input-courses">
+                  <div className="course-name">
+                    <input
+                      type="checkbox"
+                      id="react"
+                      value="React"
+                      checked={newUser.courses.includes("React")}
+                      onChange={handleCourseChange}
+                    />
+                    <label htmlFor="react">React</label>
+                  </div>
+                  <div className="course-name">
+                    <input
+                      type="checkbox"
+                      id="nodejs"
+                      value="Node"
+                      checked={newUser.courses.includes("Node")}
+                      onChange={handleCourseChange}
+                    />
+                    <label htmlFor="nodejs">Node.js</label>
+                  </div>
+                  <div className="course-name">
+                    <input
+                      type="checkbox"
+                      id="mongodb"
+                      value="MongoDB"
+                      checked={newUser.courses.includes("MongoDB")}
+                      onChange={handleCourseChange}
+                    />
+                    <label htmlFor="mongodb">MongoDB</label>
+                  </div>
+                </div>
+              </div>
+              <div className="gender-section">
+                <label>Gender</label>
+                <div className="gender-options">
+                  <input type='radio' id="male" name="gender" value="male" />
+                  <label htmlFor="male">Male</label>
+                </div>
+                <div className="gender-options">
+                  <input type='radio' id="female" name="gender" value="female" />
+                  <label htmlFor="female">Female</label>
                 </div>
               </div>
 
