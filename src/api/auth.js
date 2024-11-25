@@ -1,15 +1,15 @@
-// src/api/auth.js
-import apiClient from "./axios";
 import endpoints from "./endpoints";
 
-// Login API
+import apiClient from "./apiClient";
+
 export const loginUser = async (email, password) => {
   try {
-    const response = await apiClient.post(endpoints.LOGIN, { email, password });
-    return response.data; // Return the data (e.g., token and user info)
+  console.log("Sending API request with:", { email, password }); // Debug log
+  const response = await apiClient.post(endpoints.LOGIN, { email, password });
+  console.log("API response:", response.data); // Debug log
+  return response.data;
   } catch (error) {
-    throw error.response?.data?.message || "Login failed"; // Handle errors
+  console.error("Error in loginUser:", error.response?.data || error.message);
+  throw error.response?.data?.message || "Login failed"; // Show backend error or fallback
   }
-};
-
-// Additional authentication APIs can be added here (e.g., registerUser, logoutUser)
+ };

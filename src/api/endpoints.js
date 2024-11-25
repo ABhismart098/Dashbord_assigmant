@@ -1,7 +1,7 @@
 // src/api/endpoints.js
 
 const endpoints = {
-    LOGIN: "api/auth", // Login endpoint
+    LOGIN: "api/login/employee", // Login endpoint
     
   };
   

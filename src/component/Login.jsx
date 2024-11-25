@@ -6,27 +6,28 @@ import "./login.css";
 function CollegeLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Define setError for error handling
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault(); // Prevent form default submission behavior
+    setLoading(true); // Set loading state
 
     try {
-      // Call the loginUser function from auth.js
+      // Call the loginUser function
       const { token, user } = await loginUser(email, password);
 
       // Save token to localStorage
       localStorage.setItem("authToken", token);
 
-      // Redirect to dashboard
+      // Redirect to dashboard or desired route
       navigate("/dashboard");
     } catch (error) {
-      console.error("Login failed:", error);
-      alert(error || "Invalid credentials");
+      console.error("Login failed:", error.message || error);
+      setError(error.message || "Invalid credentials"); // Display error to user
     } finally {
-      setLoading(false);
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -64,6 +65,7 @@ function CollegeLoginPage() {
           <button type="submit" className="login-btn" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
+          {error && <p style={{ color: "red" }}>{error}</p>} {/* Display errors */}
         </form>
       </div>
     </div>
