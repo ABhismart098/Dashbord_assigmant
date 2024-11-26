@@ -1,15 +1,26 @@
 import endpoints from "./endpoints";
-
 import apiClient from "./apiClient";
 
 export const loginUser = async (email, password) => {
   try {
-  console.log("Sending API request with:", { email, password }); // Debug log
-  const response = await apiClient.post(endpoints.LOGIN, { email, password });
-  console.log("API response:", response.data); // Debug log
-  return response.data;
+    console.log("Sending API request with:", { email, password }); // Debug log
+    
+    // Make the API request
+    const response = await apiClient.post(endpoints.LOGIN, { email, password });
+    
+    console.log("API response:", response.data); // Debug log
+    return response.data; // Return the successful response data
   } catch (error) {
-  console.error("Error in loginUser:", error.response?.data || error.message);
-  throw error.response?.data?.message || "Login failed"; // Show backend error or fallback
+    // Handle API-specific errors
+    if (error.response) {
+      console.error("Server Error in loginUser:", error.response.data);
+      
+      // Throw backend-provided error message or a generic one
+      throw error.response.data?.message || "Invalid credentials. Please try again.";
+    } 
+    
+    // Handle network or unexpected errors
+    console.error("Unexpected Error in loginUser:", error.message);
+    throw "Unable to connect to the server. Please check your internet connection.";
   }
- };
+};

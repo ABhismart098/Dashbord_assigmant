@@ -27,7 +27,7 @@ const App = () => {
       };
 
       // Send POST request to backend
-      const response = await axios.post("/api/login/employee", userData);
+      const response = await axios.post("/api/login/employees", userData);
 
       console.log("Status:", response.status);
       console.log("Token:", response.data.token);

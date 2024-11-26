@@ -13,6 +13,7 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "client": "file:",
+    "cors": "^2.8.5",
     "eslint": "^9.15.0",
     "eslint-plugin-react": "^7.37.2",
     "npm-auth": "^1.1.0",
