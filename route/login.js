@@ -7,6 +7,7 @@ exports.login = async (req, res) => {
   try {
     const value = encryptPassword(passwordValue);
     const user = await login.findOne({ userName, password: value });
+    console.log(userName, value);
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
