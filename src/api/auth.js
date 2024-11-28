@@ -1,12 +1,12 @@
 import endpoints from "./endpoints";
 import apiClient from "./apiClient";
 
-export const loginUser = async (email, passwordValue) => {
+export const loginUser = async (userName, passwordValue) => {
   try {
-    console.log("Sending API request with:", { email, passwordValue }); // Debug log
+    console.log("Sending API request with:", { userName, passwordValue }); // Debug log
     
     // Make the API request
-    const response = await apiClient.post(endpoints.LOGIN, { email, passwordValue });
+    const response = await apiClient.post(endpoints.LOGIN, { userName, passwordValue });
     
     console.log("API response:", response.data); // Debug log
     return response.data; // Return the successful response data
